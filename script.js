@@ -1,24 +1,119 @@
 const messages = document.getElementById("messages");
 const userInput = document.getElementById("userInput");
+const welcome = document.getElementById("welcome");
+const quickSection = document.getElementById("quickSection");
 
 
-// ======================================
-// BACKEND URL
-// ======================================
+/* ================= DEMO ANSWERS ================= */
 
-// LOCAL TESTING
-const API_URL = "http://127.0.0.1:5000/chat";
+const answers = {
 
-// IMPORTANT:
-// Later when backend is deployed online,
-// change the above URL to your online backend URL.
+    "dbms": `
+        <strong>DBMS</strong> stands for Database Management System.
+        <br><br>
+        It is software used to create, store, manage and retrieve data from databases.
+        <br><br>
+        <strong>Examples:</strong>
+        <ul>
+            <li>MySQL</li>
+            <li>Oracle</li>
+            <li>PostgreSQL</li>
+            <li>MongoDB</li>
+        </ul>
+    `,
+
+    "oops": `
+        <strong>OOPs</strong> stands for Object-Oriented Programming.
+        <br><br>
+        It is a programming approach based on objects and classes.
+        <br><br>
+        <strong>Main concepts:</strong>
+        <ul>
+            <li>Encapsulation</li>
+            <li>Inheritance</li>
+            <li>Polymorphism</li>
+            <li>Abstraction</li>
+        </ul>
+    `,
+
+    "os": `
+        <strong>Operating System</strong> is system software that manages computer hardware and software resources.
+        <br><br>
+        <strong>Examples:</strong>
+        <ul>
+            <li>Windows</li>
+            <li>Linux</li>
+            <li>macOS</li>
+            <li>Android</li>
+        </ul>
+    `,
+
+    "exam": `
+        <strong>Exam Preparation Tips 📝</strong>
+        <br><br>
+        <ul>
+            <li>Understand the syllabus.</li>
+            <li>Create a simple study timetable.</li>
+            <li>Study important concepts regularly.</li>
+            <li>Practice previous-year questions.</li>
+            <li>Revise before the exam.</li>
+        </ul>
+    `,
+
+    "study": `
+        <strong>Study Tips 📚</strong>
+        <br><br>
+        <ul>
+            <li>Set small daily goals.</li>
+            <li>Study in a distraction-free place.</li>
+            <li>Take short breaks.</li>
+            <li>Practice instead of only reading.</li>
+            <li>Revise regularly.</li>
+        </ul>
+    `,
+
+    "attendance": `
+        <strong>Attendance Tips 📊</strong>
+        <br><br>
+        <ul>
+            <li>Attend classes regularly.</li>
+            <li>Avoid unnecessary leave.</li>
+            <li>Track your attendance percentage.</li>
+            <li>Talk to your faculty when necessary.</li>
+        </ul>
+    `,
+
+    "python": `
+        <strong>Python 🐍</strong> is a high-level programming language.
+        <br><br>
+        It is commonly used for:
+        <ul>
+            <li>Web Development</li>
+            <li>Data Science</li>
+            <li>Machine Learning</li>
+            <li>Artificial Intelligence</li>
+            <li>Automation</li>
+        </ul>
+    `,
+
+    "ai": `
+        <strong>Artificial Intelligence (AI)</strong> is a technology that enables computers to perform tasks that normally require human intelligence.
+        <br><br>
+        <strong>Examples:</strong>
+        <ul>
+            <li>Chatbots</li>
+            <li>Image Recognition</li>
+            <li>Speech Recognition</li>
+            <li>Recommendation Systems</li>
+        </ul>
+    `
+
+};
 
 
-// ======================================
-// SEND MESSAGE
-// ======================================
+/* ================= SEND MESSAGE ================= */
 
-async function sendMessage() {
+function sendMessage() {
 
     const question = userInput.value.trim();
 
@@ -26,295 +121,142 @@ async function sendMessage() {
         return;
     }
 
-
-    // Add user message
     addMessage(question, "user-message");
 
     userInput.value = "";
 
+    welcome.style.display = "none";
+    quickSection.style.display = "none";
 
-    // Add thinking message
-    const thinking = addMessage(
-        "🤖 Thinking...",
-        "ai-message"
-    );
+    setTimeout(() => {
 
+        const answer = getAnswer(question);
 
-    try {
+        addMessage(answer, "ai-message");
 
-        const response = await fetch(API_URL, {
-
-            method: "POST",
-
-            headers: {
-                "Content-Type": "application/json"
-            },
-
-            body: JSON.stringify({
-                question: question
-            })
-
-        });
-
-
-        const data = await response.json();
-
-
-        // Remove thinking
-        thinking.remove();
-
-
-        if (response.ok) {
-
-            addAIMessage(data.answer);
-
-        } else {
-
-            addMessage(
-                "❌ " +
-                (data.answer || "Something went wrong."),
-                "ai-message"
-            );
-        }
-
-
-    } catch (error) {
-
-        thinking.remove();
-
-
-        addMessage(
-            "❌ Cannot connect to EduNexa AI backend.",
-            "ai-message"
-        );
-
-
-        console.error(
-            "Backend connection error:",
-            error
-        );
-    }
+    }, 500);
 }
 
 
-// ======================================
-// ADD NORMAL MESSAGE
-// ======================================
+/* ================= FIND ANSWER ================= */
+
+function getAnswer(question) {
+
+    const q = question.toLowerCase();
+
+    if (q.includes("dbms")) {
+        return answers.dbms;
+    }
+
+    if (
+        q.includes("oops") ||
+        q.includes("oop") ||
+        q.includes("object oriented")
+    ) {
+        return answers.oops;
+    }
+
+    if (
+        q.includes("operating system") ||
+        q === "os" ||
+        q.includes("what is os")
+    ) {
+        return answers.os;
+    }
+
+    if (
+        q.includes("exam") ||
+        q.includes("prepare")
+    ) {
+        return answers.exam;
+    }
+
+    if (
+        q.includes("study") ||
+        q.includes("studying")
+    ) {
+        return answers.study;
+    }
+
+    if (q.includes("attendance")) {
+        return answers.attendance;
+    }
+
+    if (q.includes("python")) {
+        return answers.python;
+    }
+
+    if (
+        q === "ai" ||
+        q.includes("artificial intelligence")
+    ) {
+        return answers.ai;
+    }
+
+    if (
+        q === "hi" ||
+        q === "hello" ||
+        q === "hey" ||
+        q === "hai"
+    ) {
+
+        return `
+            <strong>Hello! 👋</strong>
+            <br><br>
+            I'm <strong>EduNexa AI</strong>, your student assistant.
+            <br><br>
+            You can ask me about:
+            <ul>
+                <li>DBMS</li>
+                <li>OOPs</li>
+                <li>Operating System</li>
+                <li>Python</li>
+                <li>Exams</li>
+                <li>Study Tips</li>
+            </ul>
+        `;
+    }
+
+
+    return `
+        <strong>Demo Mode 🤖</strong>
+        <br><br>
+        I don't have an answer for that question yet.
+        <br><br>
+        Try asking:
+        <ul>
+            <li>What is DBMS?</li>
+            <li>What is OOPs?</li>
+            <li>What is Operating System?</li>
+            <li>Give me study tips</li>
+            <li>How can I prepare for exams?</li>
+        </ul>
+    `;
+}
+
+
+/* ================= ADD MESSAGE ================= */
 
 function addMessage(text, className) {
 
-    const message =
-        document.createElement("div");
+    const message = document.createElement("div");
 
+    message.className = "message " + className;
 
-    message.className =
-        "message " + className;
-
-
-    message.textContent = text;
-
+    message.innerHTML = text;
 
     messages.appendChild(message);
 
-
-    messages.scrollTop =
-        messages.scrollHeight;
-
+    message.scrollIntoView({
+        behavior: "smooth",
+        block: "end"
+    });
 
     return message;
 }
 
 
-// ======================================
-// ADD AI MESSAGE
-// ======================================
-
-function addAIMessage(text) {
-
-    const message =
-        document.createElement("div");
-
-
-    message.className =
-        "message ai-message";
-
-
-    message.innerHTML =
-        formatAIResponse(text);
-
-
-    messages.appendChild(message);
-
-
-    messages.scrollTop =
-        messages.scrollHeight;
-
-
-    return message;
-}
-
-
-// ======================================
-// FORMAT AI RESPONSE
-// ======================================
-
-function formatAIResponse(text) {
-
-    // Safety: make sure text is a string
-    text = String(text);
-
-
-    // ----------------------------------
-    // Escape HTML
-    // ----------------------------------
-
-    text = text
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;");
-
-
-    // ----------------------------------
-    // CODE BLOCKS
-    // ----------------------------------
-
-    text = text.replace(
-        /```(?:\w+)?\s*([\s\S]*?)```/g,
-        function(match, code) {
-
-            return `
-                <pre class="code-block"><code>${code.trim()}</code></pre>
-            `;
-        }
-    );
-
-
-    // ----------------------------------
-    // INLINE CODE
-    // ----------------------------------
-
-    text = text.replace(
-        /`([^`]+)`/g,
-        '<code class="inline-code">$1</code>'
-    );
-
-
-    // ----------------------------------
-    // BOLD TEXT
-    // ----------------------------------
-
-    text = text.replace(
-        /\*\*(.*?)\*\*/g,
-        "<strong>$1</strong>"
-    );
-
-
-    // ----------------------------------
-    // HEADINGS
-    // ----------------------------------
-
-    text = text.replace(
-        /^### (.*)$/gm,
-        "<h4>$1</h4>"
-    );
-
-
-    text = text.replace(
-        /^## (.*)$/gm,
-        "<h3>$1</h3>"
-    );
-
-
-    text = text.replace(
-        /^# (.*)$/gm,
-        "<h2>$1</h2>"
-    );
-
-
-    // ----------------------------------
-    // BULLET POINTS
-    // ----------------------------------
-
-    text = text.replace(
-        /^\s*[-*]\s+(.*)$/gm,
-        "<li>$1</li>"
-    );
-
-
-    // ----------------------------------
-    // NUMBERED LIST
-    // ----------------------------------
-
-    text = text.replace(
-        /^\s*\d+\.\s+(.*)$/gm,
-        "<li>$1</li>"
-    );
-
-
-    // ----------------------------------
-    // WRAP LIST ITEMS
-    // ----------------------------------
-
-    text = text.replace(
-        /(<li>.*?<\/li>\s*)+/gs,
-        function(match) {
-
-            return "<ul>" + match + "</ul>";
-        }
-    );
-
-
-    // ----------------------------------
-    // LINE BREAKS
-    // ----------------------------------
-
-    text = text.replace(
-        /\n/g,
-        "<br>"
-    );
-
-
-    // ----------------------------------
-    // REMOVE EXTRA BR
-    // ----------------------------------
-
-    text = text.replace(
-        /<br>\s*<ul>/g,
-        "<ul>"
-    );
-
-
-    text = text.replace(
-        /<\/ul>\s*<br>/g,
-        "</ul>"
-    );
-
-
-    text = text.replace(
-        /<br>\s*<pre/g,
-        "<pre"
-    );
-
-
-    text = text.replace(
-        /<\/pre>\s*<br>/g,
-        "</pre>"
-    );
-
-
-    text = text.replace(
-        /<br>\s*<h([234])/g,
-        "<h$1"
-    );
-
-
-    return text;
-}
-
-
-// ======================================
-// QUICK QUESTIONS
-// ======================================
+/* ================= QUICK QUESTION ================= */
 
 function askQuestion(question) {
 
@@ -324,9 +266,7 @@ function askQuestion(question) {
 }
 
 
-// ======================================
-// ENTER KEY
-// ======================================
+/* ================= ENTER ================= */
 
 function handleEnter(event) {
 
@@ -335,13 +275,12 @@ function handleEnter(event) {
         event.preventDefault();
 
         sendMessage();
+
     }
 }
 
 
-// ======================================
-// NEW CHAT
-// ======================================
+/* ================= NEW CHAT ================= */
 
 function newChat() {
 
@@ -349,58 +288,27 @@ function newChat() {
 
     userInput.value = "";
 
+    welcome.style.display = "block";
+
+    quickSection.style.display = "block";
+
     userInput.focus();
 }
 
 
-// ======================================
-// SIDEBAR SECTIONS
-// ======================================
+/* ================= WELCOME ================= */
 
-function showSection(section) {
+function showWelcome() {
 
-    let question = "";
+    newChat();
 
-
-    if (section === "ask") {
-
-        question =
-            "How can you help me as a college student?";
-    }
-
-
-    if (section === "study") {
-
-        question =
-            "Give me some effective study tips.";
-    }
-
-
-    if (section === "exam") {
-
-        question =
-            "How should I prepare for my exams?";
-    }
-
-
-    if (section === "rules") {
-
-        question =
-            "What are general college regulations?";
-    }
-
-
-    userInput.value = question;
-
-    sendMessage();
 }
 
 
-// ======================================
-// DARK MODE
-// ======================================
+/* ================= DARK MODE ================= */
 
-function toggleTheme() {
+function toggleDarkMode() {
 
     document.body.classList.toggle("dark");
+
 }
