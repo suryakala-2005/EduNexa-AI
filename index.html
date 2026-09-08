@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>EduNexa AI - Student Assistant</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- ================= SIDEBAR ================= -->
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="logo">🎓</div>
+
+            <div class="brand-text">
+                <h2>EduNexa AI</h2>
+                <span>Student Assistant</span>
+            </div>
+        </div>
+
+        <button class="new-chat" onclick="newChat()">
+            <span>＋</span>
+            <b>New Chat</b>
+        </button>
+
+        <nav class="menu">
+
+            <button class="menu-item active" onclick="showSection('ask')">
+                <span>💬</span>
+                <b>Ask AI</b>
+            </button>
+
+            <button class="menu-item" onclick="showSection('study')">
+                <span>📚</span>
+                <b>Study Help</b>
+            </button>
+
+            <button class="menu-item" onclick="showSection('exam')">
+                <span>📝</span>
+                <b>Exam Information</b>
+            </button>
+
+            <button class="menu-item" onclick="showSection('rules')">
+                <span>📋</span>
+                <b>Regulations</b>
+            </button>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <div class="status">
+                <span class="online-dot"></span>
+                Demo Assistant Online
+            </div>
+
+            <p>EduNexa AI v1.0</p>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ================= MAIN ================= -->
+    <main class="main">
+
+        <!-- TOP BAR -->
+        <header class="topbar">
+
+            <div class="topbar-title">
+
+                <h1>EduNexa AI</h1>
+
+                <p>
+                    Your intelligent college assistant
+                </p>
+
+            </div>
+
+            <div class="top-actions">
+
+                <button onclick="toggleTheme()" title="Dark Mode">
+                    🌙
+                </button>
+
+                <button onclick="newChat()" title="New Chat">
+                    ＋
+                </button>
+
+            </div>
+
+        </header>
+
+
+        <!-- ================= CHAT AREA ================= -->
+        <section class="chat-area" id="chatArea">
+
+            <!-- WELCOME -->
+            <div class="welcome" id="welcome">
+
+                <div class="welcome-icon">
+                    🤖
+                </div>
+
+                <h2>
+                    Hello! 👋
+                </h2>
+
+                <p>
+                    I'm <strong>EduNexa AI</strong>, your student support assistant.
+                    <br>
+                    How can I help you today?
+                </p>
+
+            </div>
+
+
+            <!-- QUICK QUESTIONS -->
+            <div class="quick-questions">
+
+                <h3>Quick Questions</h3>
+
+                <div class="quick-grid">
+
+                    <button
+                        class="quick-card"
+                        onclick="askQuestion('What is a syllabus?')">
+
+                        <div class="quick-card-icon">
+                            📚
+                        </div>
+
+                        <div>
+                            <h4>Syllabus</h4>
+                            <p>Understand your subjects</p>
+                        </div>
+
+                    </button>
+
+
+                    <button
+                        class="quick-card"
+                        onclick="askQuestion('How can I prepare for exams?')">
+
+                        <div class="quick-card-icon">
+                            📝
+                        </div>
+
+                        <div>
+                            <h4>Exam Preparation</h4>
+                            <p>Get study guidance</p>
+                        </div>
+
+                    </button>
+
+
+                    <button
+                        class="quick-card"
+                        onclick="askQuestion('How can I improve my attendance?')">
+
+                        <div class="quick-card-icon">
+                            📊
+                        </div>
+
+                        <div>
+                            <h4>Attendance</h4>
+                            <p>Learn attendance tips</p>
+                        </div>
+
+                    </button>
+
+
+                    <button
+                        class="quick-card"
+                        onclick="askQuestion('What are college regulations?')">
+
+                        <div class="quick-card-icon">
+                            📋
+                        </div>
+
+                        <div>
+                            <h4>Regulations</h4>
+                            <p>General student rules</p>
+                        </div>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- MESSAGES -->
+            <div id="messages"></div>
+
+        </section>
+
+
+        <!-- ================= INPUT ================= -->
+        <div class="input-wrapper">
+
+            <div class="input-box">
+
+                <input
+                    type="text"
+                    id="userInput"
+                    placeholder="Ask EduNexa AI anything..."
+                    autocomplete="off"
+                    onkeydown="handleEnter(event)"
+                >
+
+                <button
+                    class="send-btn"
+                    onclick="sendMessage()"
+                    title="Send"
+                >
+                    ➤
+                </button>
+
+            </div>
+
+            <p class="input-note">
+                ✨ EduNexa AI Demo • For important information, verify with your college.
+            </p>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
