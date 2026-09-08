@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>EduNexa AI - Student Assistant</title>
+    <title>EduNexa AI</title>
 
     <link rel="stylesheet" href="style.css">
 </head>
@@ -14,84 +13,71 @@
 
 <div class="app">
 
-    <!-- ================= SIDEBAR ================= -->
+    <!-- SIDEBAR -->
     <aside class="sidebar">
 
         <div class="brand">
-            <div class="logo">🎓</div>
+            <div class="brand-logo">🎓</div>
 
-            <div class="brand-text">
+            <div>
                 <h2>EduNexa AI</h2>
                 <span>Student Assistant</span>
             </div>
         </div>
 
         <button class="new-chat" onclick="newChat()">
-            <span>＋</span>
-            <b>New Chat</b>
+            ＋ New Chat
         </button>
 
-        <nav class="menu">
+        <div class="menu">
 
-            <button class="menu-item active" onclick="showSection('ask')">
-                <span>💬</span>
-                <b>Ask AI</b>
+            <button class="menu-item active" onclick="showWelcome()">
+                💬 Ask AI
             </button>
 
-            <button class="menu-item" onclick="showSection('study')">
-                <span>📚</span>
-                <b>Study Help</b>
+            <button class="menu-item" onclick="askQuestion('Give me study tips')">
+                📚 Study Help
             </button>
 
-            <button class="menu-item" onclick="showSection('exam')">
-                <span>📝</span>
-                <b>Exam Information</b>
+            <button class="menu-item" onclick="askQuestion('How can I prepare for exams?')">
+                📝 Exam Help
             </button>
 
-            <button class="menu-item" onclick="showSection('rules')">
-                <span>📋</span>
-                <b>Regulations</b>
+            <button class="menu-item" onclick="askQuestion('What is DBMS?')">
+                💻 Technical
             </button>
 
-        </nav>
+        </div>
 
         <div class="sidebar-bottom">
-
-            <div class="status">
-                <span class="online-dot"></span>
-                Demo Assistant Online
+            <div class="online">
+                <span></span> Demo Assistant Online
             </div>
 
-            <p>EduNexa AI v1.0</p>
-
+            <small>EduNexa AI v1.0</small>
         </div>
 
     </aside>
 
 
-    <!-- ================= MAIN ================= -->
+    <!-- MAIN -->
     <main class="main">
 
-        <!-- TOP BAR -->
-        <header class="topbar">
+        <!-- HEADER -->
+        <header class="header">
 
-            <div class="topbar-title">
-
+            <div>
                 <h1>EduNexa AI</h1>
-
-                <p>
-                    Your intelligent college assistant
-                </p>
-
+                <p>Your intelligent college assistant</p>
             </div>
 
-            <div class="top-actions">
+            <div class="header-buttons">
 
-                <button onclick="toggleTheme()" title="Dark Mode">
+                <button onclick="toggleDarkMode()">
                     🌙
                 </button>
 
-                <button onclick="newChat()" title="New Chat">
+                <button onclick="newChat()">
                     ＋
                 </button>
 
@@ -100,97 +86,65 @@
         </header>
 
 
-        <!-- ================= CHAT AREA ================= -->
-        <section class="chat-area" id="chatArea">
+        <!-- CHAT -->
+        <section class="chat">
 
-            <!-- WELCOME -->
-            <div class="welcome" id="welcome">
+            <div id="welcome" class="welcome">
 
-                <div class="welcome-icon">
+                <div class="bot-icon">
                     🤖
                 </div>
 
-                <h2>
-                    Hello! 👋
-                </h2>
+                <h2>Hello! 👋</h2>
 
                 <p>
-                    I'm <strong>EduNexa AI</strong>, your student support assistant.
-                    <br>
-                    How can I help you today?
+                    I'm <b>EduNexa AI</b>, your student support assistant.
+                </p>
+
+                <p>
+                    Ask me anything about your studies.
                 </p>
 
             </div>
 
 
             <!-- QUICK QUESTIONS -->
-            <div class="quick-questions">
+            <div class="quick-section" id="quickSection">
 
-                <h3>Quick Questions</h3>
+                <h3>What can I help you with?</h3>
 
                 <div class="quick-grid">
 
-                    <button
-                        class="quick-card"
-                        onclick="askQuestion('What is a syllabus?')">
-
-                        <div class="quick-card-icon">
-                            📚
-                        </div>
-
+                    <button onclick="askQuestion('What is DBMS?')">
+                        <span>💻</span>
                         <div>
-                            <h4>Syllabus</h4>
-                            <p>Understand your subjects</p>
+                            <b>DBMS</b>
+                            <small>Learn database concepts</small>
                         </div>
-
                     </button>
 
-
-                    <button
-                        class="quick-card"
-                        onclick="askQuestion('How can I prepare for exams?')">
-
-                        <div class="quick-card-icon">
-                            📝
-                        </div>
-
+                    <button onclick="askQuestion('What is OOPs?')">
+                        <span>🧩</span>
                         <div>
-                            <h4>Exam Preparation</h4>
-                            <p>Get study guidance</p>
+                            <b>OOPs</b>
+                            <small>Understand programming</small>
                         </div>
-
                     </button>
 
-
-                    <button
-                        class="quick-card"
-                        onclick="askQuestion('How can I improve my attendance?')">
-
-                        <div class="quick-card-icon">
-                            📊
-                        </div>
-
+                    <button onclick="askQuestion('How can I prepare for exams?')">
+                        <span>📝</span>
                         <div>
-                            <h4>Attendance</h4>
-                            <p>Learn attendance tips</p>
+                            <b>Exam Preparation</b>
+                            <small>Get useful study tips</small>
                         </div>
-
                     </button>
 
-
-                    <button
-                        class="quick-card"
-                        onclick="askQuestion('What are college regulations?')">
-
-                        <div class="quick-card-icon">
-                            📋
-                        </div>
-
+                    <button onclick="askQuestion('Give me study tips')">
+                        <span>📚</span>
                         <div>
-                            <h4>Regulations</h4>
-                            <p>General student rules</p>
+                            <b>Study Help</b>
+                            <small>Improve your learning</small>
                         </div>
-
                     </button>
 
                 </div>
@@ -204,31 +158,27 @@
         </section>
 
 
-        <!-- ================= INPUT ================= -->
-        <div class="input-wrapper">
+        <!-- INPUT -->
+        <div class="input-area">
 
             <div class="input-box">
 
                 <input
-                    type="text"
                     id="userInput"
+                    type="text"
                     placeholder="Ask EduNexa AI anything..."
                     autocomplete="off"
                     onkeydown="handleEnter(event)"
                 >
 
-                <button
-                    class="send-btn"
-                    onclick="sendMessage()"
-                    title="Send"
-                >
+                <button onclick="sendMessage()">
                     ➤
                 </button>
 
             </div>
 
-            <p class="input-note">
-                ✨ EduNexa AI Demo • For important information, verify with your college.
+            <p>
+                ✨ EduNexa AI Demo • Student Support Assistant
             </p>
 
         </div>
@@ -237,8 +187,8 @@
 
 </div>
 
-
 <script src="script.js"></script>
 
 </body>
 </html>
+
